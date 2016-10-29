@@ -1,8 +1,11 @@
 {
     "name": "mgogula/happyhour-reminder",
     "require": {
-        "symfony/browser-kit": "^3.1",
-        "symfony/console": "^3.1"
+        "symfony/console": "^3.1",
+        "guzzlehttp/guzzle": "^6.2",
+        "symfony/dom-crawler": "^3.1",
+        "pimple/pimple": "^3.0",
+        "phpmailer/phpmailer": "^5.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.6",
@@ -14,5 +17,10 @@
             "name": "Mikolaj Gogula",
             "email": "mikolaj.gogula@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "HappyHourReminder\\": "src/"
+        }
+    }
 }
