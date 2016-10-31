@@ -61,6 +61,6 @@ class GuzzleHttpClient implements ClientInterface
             return new Response(true, $currentContent);
         }
 
-        return new Response(true, $currentContent);
+        return new Response(false, null);
     }
 }
