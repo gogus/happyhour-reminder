@@ -25,14 +25,14 @@ class RemindCommand extends Command
      * CheckCommand constructor.
      *
      * @param AdapterInterface $adapter
-     * @param ClientInterface $client
+     * @param ClientInterface  $client
      */
     public function __construct(AdapterInterface $adapter, ClientInterface $client)
     {
-        parent::__construct();
-        
         $this->adapter = $adapter;
-        $this->client = $client;
+        $this->client  = $client;
+
+        parent::__construct();
     }
 
     /**
@@ -40,7 +40,7 @@ class RemindCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('happyhour:remind');
+        $this->setName('remind');
         $this->setDescription('Checks if happy hour is available and reminds about it.');
     }
 
@@ -50,10 +50,12 @@ class RemindCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('Checking for happyhour...');
-        
-        if ($this->client->isAvailable()) {
+
+        $response = $this->client->getResponse();
+
+        if ($response->isAvailable()) {
             $output->writeln('Happyhour available.');
-            $this->adapter->remind();
+            $this->adapter->remind($response);
         }
     }
 }

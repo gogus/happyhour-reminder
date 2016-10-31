@@ -2,6 +2,8 @@
 
 namespace HappyHourReminder\Adapter;
 
+use HappyHourReminder\Entity\Response;
+
 /**
  * Interface AdapterInterface
  *
@@ -12,7 +14,7 @@ interface AdapterInterface
     /**
      * Reminds about activity.
      *
-     * @return void
+     * @param Response $response
      */
-    public function remind();
+    public function remind(Response $response);
 }

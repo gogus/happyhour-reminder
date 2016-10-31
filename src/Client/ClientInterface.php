@@ -2,6 +2,8 @@
 
 namespace HappyHourReminder\Client;
 
+use HappyHourReminder\Entity\Response;
+
 /**
  * Interface ClientInterface
  * 
@@ -10,7 +12,7 @@ namespace HappyHourReminder\Client;
 interface ClientInterface
 {
     /**
-     * @return bool
+     * @return Response
      */
-    public function isAvailable();
+    public function getResponse();
 }

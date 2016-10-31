@@ -4,6 +4,8 @@ use GuzzleHttp\Client;
 use HappyHourReminder\Adapter\MailAdapter;
 use HappyHourReminder\Client\GuzzleHttpClient;
 use HappyHourReminder\Command\RemindCommand;
+use Mailgun\Mailgun;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Console\Application;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -17,16 +19,20 @@ $c[Client::class] = function () {
     return new Client();
 };
 
-$c[PHPMailer::class] = function () {
-    return new PHPMailer();
+$c[Mailgun::class] = function () {
+    return new Mailgun(getenv('MAILGUN_API_KEY'));
+};
+
+$c[FilesystemAdapter::class] = function () {
+    return new FilesystemAdapter();
 };
 
 $c[GuzzleHttpClient::class] = function ($c) {
-    return new GuzzleHttpClient($c[Client::class], $c[Crawler::class]);
+    return new GuzzleHttpClient($c[Client::class], $c[Crawler::class], $c[FilesystemAdapter::class]);
 };
 
 $c[MailAdapter::class] = function ($c) {
-    return new MailAdapter($c[PHPMailer::class]);
+    return new MailAdapter($c[Mailgun::class]);
 };
 
 $c[RemindCommand::class] = function ($c) {
@@ -37,7 +43,7 @@ $c[Application::class] = function ($c) {
     $application = new Application();
     $application->add($c[RemindCommand::class]);
 
-    return new Application();
+    return $application;
 };
 
 return $c;
